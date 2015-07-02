@@ -7,18 +7,18 @@ BASEDIR=`pwd`
 CURRENT_IMAGE_LIST_SHA1=$(curl -s -L https://raw.githubusercontent.com/docker-library/official-images/master/library/centos | sha1sum | awk '{print $1}')
 SHA1_FILE="imagelist.sha1"
 
-git clone --single-branch git@github.com:dit4c/centos-nonroot.git
-if [[ $(cat centos-nonroot/$SHA1_FILE) == "$CURRENT_IMAGE_LIST_SHA1" ]]; then
+git clone --single-branch git@github.com:dit4c/centos-notroot.git
+if [[ $(cat centos-notroot/$SHA1_FILE) == "$CURRENT_IMAGE_LIST_SHA1" ]]; then
   echo "Image list hasn't changed. Nothing to do."
   exit 0
 fi
 
 mkdir -p tmp/rootfs
 
-cd centos-nonroot
+cd centos-notroot
 git remote add official https://github.com/CentOS/sig-cloud-instance-images.git
 git fetch official CentOS-7
-git checkout -b CentOS-7-noroot FETCH_HEAD
+git checkout -b CentOS-7-notroot FETCH_HEAD
 
 curl -L http://portable.proot.me/proot-x86_64 > $BASEDIR/tmp/proot
 chmod +x $BASEDIR/tmp/proot
@@ -48,4 +48,4 @@ git checkout master
 echo "$CURRENT_IMAGE_LIST_SHA1" > $SHA1_FILE
 git commit -m "Updating image list digest" -a
 
-git push origin master +CentOS-7-noroot
+git push origin master +CentOS-7-notroot
