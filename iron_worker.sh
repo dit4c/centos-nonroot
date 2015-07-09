@@ -1,6 +1,8 @@
-#!/bin/bash +x
+#!/bin/bash -x
 
 set -e
+
+uname -a
 
 while true
 do
@@ -23,4 +25,4 @@ echo 'ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no $*' > ssh
 chmod +x ssh
 export GIT_SSH="$(pwd)/ssh"
 
-bash +x ./build.sh
+source ./build.sh
