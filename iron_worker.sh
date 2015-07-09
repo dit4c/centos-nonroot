@@ -2,19 +2,9 @@
 
 set -e
 
-uname -a
-
-while true
-do
-  if [[ "$1" == "-config" ]]; then
-    eval `ruby json_envvars_to_exports.rb < $2`
-    shift
-  elif [[ "$1" == "" ]]; then
-    break
-  else
-    shift
-  fi
-done
+if [[ -e "env.sh" ]]; then
+  source env.sh
+fi
 
 if [[ -e "id_rsa" ]]; then
   eval `ssh-agent`
